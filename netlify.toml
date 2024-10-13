@@ -1,0 +1,15 @@
+[build]
+  publish = "/"  # La directory principale del progetto
+  functions = "netlify/functions"  # Se hai funzioni serverless
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  publish = "/"  # La directory principale del progetto
+  functions = "netlify/functions"  # Se hai funzioni serverless
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
