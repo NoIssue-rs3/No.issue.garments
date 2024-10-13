@@ -1,0 +1,89 @@
+/* Imposta il colore di sfondo viola per tutte le schermate */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #4B0082; /* Sfondo viola */
+    color: white;
+    height: 100%;
+}
+
+/* Schermata principale con immagine centrata */
+.main-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #4B0082; /* Sfondo viola per la schermata principale */
+}
+
+/* Schermata secondaria e area privata con sfondo viola */
+.secondary-page, .private-area {
+    padding: 20px;
+    background-color: #4B0082; /* Sfondo viola per uniformità */
+    color: white;
+    height: 100vh;
+}
+
+/* Stile dell'immagine centrata nella schermata principale */
+.centered-image {
+    width: 250px;
+    height: auto;
+    margin: 0 auto; /* Centra l'immagine */
+}
+
+/* Stile dei bottoni nella schermata principale e secondaria */
+button {
+    padding: 10px 20px;
+    margin: 20px;
+    font-size: 16px;
+    background-color: #ffffff; /* Colore di sfondo bianco per i bottoni */
+    color: #4B0082; /* Testo viola */
+    border: none;
+    cursor: pointer;
+}
+
+/* Stile per il bottone di ritorno alla schermata principale (freccia indietro) */
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #4B0082;
+    border: none;
+    cursor: pointer;
+}
+
+/* Stile della tabella nell'area privata */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Rimuove gli spazi tra i bordi delle celle */
+}
+
+/* Stile per le celle e le intestazioni della tabella */
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #fff; /* Bordo bianco */
+}
+
+/* Stile per l'intestazione della tabella */
+th {
+    background-color: #333; /* Sfondo grigio scuro per le intestazioni */
+}
+
+/* Colore alternato per le righe della tabella */
+tr:nth-child(even) {
+    background-color: #555; /* Sfondo grigio per le righe pari */
+}
+
+/* Stile del bottone cancella all'interno della tabella */
+td button {
+    padding: 5px 10px;
+    background-color: #ff4d4d; /* Colore rosso per il bottone cancella */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
