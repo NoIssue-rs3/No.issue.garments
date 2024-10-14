@@ -1,0 +1,3 @@
+[build]
+  publish = "No.issue.garments"  # Aggiorna con il percorso corretto
+  functions = "netlify/functions"
