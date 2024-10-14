@@ -69,27 +69,51 @@ function submitOrder() {
 function loadOrders() {
     const tableBody = document.querySelector('#order-table tbody');
     tableBody.innerHTML = ''; // Pulisce la tabella prima di caricare nuovi ordini
-    orders.forEach((order, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${order.color}</td>
-            <td>${order.size}</td>
-            <td>${order.phone}</td>
-            <td>${order.via}</td>
-            <td>${order.city}</td>
-            <td>${order.cap}</td>
-            <td>${order.uniqueCode}</td>
-            <td><input type="checkbox"></td>
-            <td><button onclick="deleteOrder(${index})">Cancella</button></td>
-        `;
-        tableBody.appendChild(row);
-    });
+    
+    // Recupera gli ordini dal database
+    fetch('/.netlify/functions/getOrders')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.data.color}</td>
+                    <td>${order.data.size}</td>
+                    <td>${order.data.phone}</td>
+                    <td>${order.data.via}</td>
+                    <td>${order.data.city}</td>
+                    <td>${order.data.cap}</td>
+                    <td>${order.data.uniqueCode}</td>
+                    <td><input type="checkbox"></td>
+                    <td><button onclick="deleteOrder('${order.ref.id}')">Cancella</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Errore nel recupero degli ordini:', error);
+        });
 }
 
 // Funzione per cancellare un ordine
-function deleteOrder(index) {
-    orders.splice(index, 1); // Rimuovi l'ordine dall'array
-    loadOrders(); // Ricarica la tabella aggiornata
+function deleteOrder(orderId) {
+    fetch('/.netlify/functions/deleteOrder', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: orderId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        alert('Ordine cancellato con successo!');
+        loadOrders(); // Ricarica la tabella aggiornata
+    })
+    .catch(error => {
+        console.error('Errore nella cancellazione dell\'ordine:', error);
+        alert('Si è verificato un errore nella cancellazione dell\'ordine.');
+    });
 }
 
 // Funzione per cancellare i campi dell'ordine dopo l'invio
