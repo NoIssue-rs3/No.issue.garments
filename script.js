@@ -34,35 +34,33 @@ function submitOrder() {
     const via = document.getElementById('via').value;
     const city = document.getElementById('city').value;
     const cap = document.getElementById('cap').value;
+    const uniqueCode = `ORD-${orderId}-${Math.floor(Math.random() * 1000)}`;
 
     if (color && size && phone && via && city && cap) {
-        const ordine = {
-            color, size, phone, via, city, cap
+        const order = {
+            color, size, phone, via, city, cap, uniqueCode
         };
-
+        
+        // Invia l'ordine al server
         fetch('/.netlify/functions/ordini', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(ordine),
+            body: JSON.stringify(order),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok'); // Gestione errore se la risposta non è ok
-            }
-            return response.json(); // Restituisce il corpo della risposta come JSON
-        })
+        .then(response => response.json())
         .then(data => {
-            console.log('Ordine confermato:', data); // Log dei dati ricevuti
-            alert(`ATTENZIONE: salva e invia questo codice nei direct della pagina Instagram @no.issue_official per la conferma e il pagamento dell'ordine: ${data.uniqueCode}`);
-            orders.push(ordine); // Aggiungi l'ordine all'array
+            console.log('Ordine confermato:', data);
+            alert(`Ordine inviato con successo! Codice: ${uniqueCode}`);
+            orders.push(order); // Aggiungi l'ordine all'array
             orderId++;
-            loadOrders(); // Ricarica la tabella degli ordini
+            clearOrderFields(); // Cancella i campi dell'ordine
+            loadOrders(); // Ricarica gli ordini nell'area privata
         })
         .catch(error => {
-            console.error('Errore nell\'invio dell\'ordine:', error); // Log degli errori
-            alert('Si è verificato un errore nell\'invio dell\'ordine.'); // Messaggio di errore
+            console.error('Errore nell\'invio dell\'ordine:', error);
+            alert('Si è verificato un errore nell\'invio dell\'ordine.');
         });
     } else {
         alert('Compila tutti i campi.');
@@ -82,6 +80,7 @@ function loadOrders() {
             <td>${order.via}</td>
             <td>${order.city}</td>
             <td>${order.cap}</td>
+            <td>${order.uniqueCode}</td>
             <td><input type="checkbox"></td>
             <td><button onclick="deleteOrder(${index})">Cancella</button></td>
         `;
@@ -95,7 +94,17 @@ function deleteOrder(index) {
     loadOrders(); // Ricarica la tabella aggiornata
 }
 
-// Event listener per l'invio dell'ordine
+// Funzione per cancellare i campi dell'ordine dopo l'invio
+function clearOrderFields() {
+    document.getElementById('color').value = '';
+    document.getElementById('size').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('via').value = '';
+    document.getElementById('city').value = '';
+    document.getElementById('cap').value = '';
+}
+
+// Aggiungi listener per il form
 document.getElementById("orderForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Impedisce il ricaricamento della pagina
     submitOrder(); // Chiama la funzione per inviare l'ordine
