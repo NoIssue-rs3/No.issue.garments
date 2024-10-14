@@ -1,9 +1,0 @@
-[build]
-  publish = "."  # Imposta la directory di pubblicazione alla radice del repository
-  functions = "netlify/functions"  # Percorso delle funzioni serverless
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
