@@ -34,13 +34,11 @@ function submitOrder() {
     const via = document.getElementById('via').value;
     const city = document.getElementById('city').value;
     const cap = document.getElementById('cap').value;
-    const uniqueCode = `ORD-${orderId}-${Math.floor(Math.random() * 1000)}`;
 
     if (color && size && phone && via && city && cap) {
-        const order = {
-            color, size, phone, via, city, cap, uniqueCode
-        };
-        
+        const uniqueCode = `ORD-${orderId}-${Math.floor(Math.random() * 1000)}`;
+        const order = { color, size, phone, via, city, cap, uniqueCode };
+
         // Invia l'ordine al server
         fetch('/.netlify/functions/ordini', {
             method: 'POST',
